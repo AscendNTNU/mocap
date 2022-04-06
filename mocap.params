@@ -1,0 +1,24 @@
+# Onboard parameters for Vehicles in Dronehallen
+#
+# Stack: ArduPilot
+# Vehicle: Multi-Rotor
+# Version: 4.1.4 
+
+# Vehicle-Id Component-Id Name Value Type 
+
+1	1	AHRS_EKF_TYPE	3	2   
+1	1	COMPASS_USE	0	2
+1	1	COMPASS_USE2	0	2
+1	1	COMPASS_USE3	0	2
+1	1	EK2_ENABLE	0	2
+1	1	EK3_ENABLE	1	2
+1	1	EK3_SRC1_POSXY	6	2
+1	1	EK3_SRC1_VELXY	0	2
+1	1	EK3_SRC1_POSZ	6	2
+1	1	EK3_SRC1_VELZ	0	2
+1	1	EK3_SRC1_YAW	6	2
+1	1	GPS_TYPE	0	2
+1	1	VISO_TYPE	1	2
+
+
+
