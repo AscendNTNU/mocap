@@ -1,9 +1,6 @@
 # mocap_node
 ROS (1) node for relaying mocap data from ROS to the drone over MAVlink.  
 
-# mocap_feedback
-Repo for the motion capture system (qualisys) in the drone hall. 
-
 ## Prerequisites
 - Pymavlink is installed: https://github.com/ArduPilot/pymavlink
 - ROS is installed (only tested with noetic): http://wiki.ros.org/noetic/Installation/Ubuntu 
@@ -11,7 +8,7 @@ Repo for the motion capture system (qualisys) in the drone hall.
 
 
 ## How to use the system 
-Start a `roscore`on your computer (Ubuntu). 
+Start a `roscore`on your computer (Ubuntu). Actually it is started with roslaunch. But we'll see if it works first
 
 ### Qualisys (Windows 10) 
 - Login with PIN 0052
