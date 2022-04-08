@@ -1,0 +1,10 @@
+<launch>
+    <arg name="dev" doc="target device (e.g., /dev/tty/USB0"/>
+    <arg name="interval" default="0.1" doc="transmission interval"/>    
+
+    <node pkg="mocap_node" type="mocap_node.py" name="mocap_node">
+        <param name="device" value="(arg dev)" />
+        <param name="interval" value="(arg interval)" />
+    </node>
+    <node pkg="tf2_ros" type="static_transform_publisher" name="static_transform_publisher" args="0 0 0 0.7071067811865476 0.7071067811865476 0 0 mocap local_ned" />
+</launch>
