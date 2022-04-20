@@ -7,8 +7,8 @@ import tf2_ros
 import tf2_geometry_msgs
 
 rospy.init_node("mocap_feedback")
-interval = int(rospy.get_param("interval"))
-device = rospy.get_param("device")
+interval = int(rospy.get_param("~interval"))
+device = rospy.get_param("~device")
 master = mavutil.mavlink_connection(device)
 
 # wait for connection
@@ -59,6 +59,6 @@ def transmit(_):
     master.mav.att_pos_mocap_send(time_usec, q, x, y, z)
 
 
-rospy.Subscriber(rospy.get_param("topic"), PoseStamped, callback)
+rospy.Subscriber(rospy.get_param("~topic"), PoseStamped, callback)
 rospy.Timer(rospy.Duration(0.2), transmit)
 rospy.spin()
