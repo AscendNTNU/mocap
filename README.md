@@ -32,13 +32,18 @@ If you want to use QGroundControl
 ```
 ./mavproxy --master=/dev/ttyUSB0 --out=udp:127.0.0.1:14550 --out=udp:127.0.0.1:14551
 ```
+
+<!--
 To transform to the correct frame 
 ```
 rosrun tf2_ros static_transform_publisher 0 0 0 0.7071067811865476 0.7071067811865476 0 0 mocap local_ned
 ```
-Go in to your ROS workspace and run the mocap node 
+-->
+
+
+Go in to your ROS workspace and launch mocap_node
 ```
-rosrun mocap_feedback subscriber.py
+roslaunch mocap_node mocap.launch
 ```
 Now you should be able to arm and take off. 
 
