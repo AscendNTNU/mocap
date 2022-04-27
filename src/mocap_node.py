@@ -29,6 +29,10 @@ def callback(msg: PoseStamped):
     global last_received, last_sent
     last_received = time.time()
 
+    # Ensure that mocap recepetion failure have been reported before reporting that things work again
+    if time.time() - last_received > 5 * interval + 1:
+        rospy.logwarn("Pose received again")
+
     if time.time() - last_sent < interval:
         return
 
