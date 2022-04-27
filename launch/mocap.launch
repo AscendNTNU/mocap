@@ -1,10 +1,12 @@
 <launch>
-    <arg name="dev" doc="target device (e.g., /dev/tty/USB0"/>
+    <arg name="dev" default="udp:127.0.0.1:14551" doc="target device (e.g., /dev/tty/USB0 or udpin:0.0.0.0:14551"/>
     <arg name="interval" default="0.1" doc="transmission interval"/>    
+    <arg name="drone" default="nostromo" doc="qualisys body (e.g. nostromo, elvind)"/>    
 
     <node pkg="mocap_node" type="mocap_node.py" name="mocap_node">
-        <param name="device" value="(arg dev)" />
-        <param name="interval" value="(arg interval)" />
+        <param name="device" value="$(arg dev)" />
+        <param name="interval" value="$(arg interval)" />
+        <param name="topic" value="/qualisys/$(arg drone)/pose" />
     </node>
     <node pkg="tf2_ros" type="static_transform_publisher" name="static_transform_publisher" args="0 0 0 0.7071067811865476 0.7071067811865476 0 0 mocap local_ned" />
 </launch>
