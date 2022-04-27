@@ -57,7 +57,7 @@ def callback(msg: PoseStamped):
 
 def check_mavlink_connection(_):
     if not ping():
-        rospy.logerror(f"Lost connection to {device}")
+        rospy.logerr(f"Lost connection to {device}")
         while not ping():
             pass
         rospy.logwarn(f"Connection reestablished to {device}")
@@ -69,7 +69,7 @@ def check_mavlink_connection(_):
 def check_mocap_reception(_):
     since_last_pose = time.time() - last_received
     if since_last_pose > 5 * interval and time.time() - last_logerr > 30:
-        rospy.logerror(f"No pose received in the last {since_last_pose} seconds")
+        rospy.logerr(f"No pose received in the last {since_last_pose} seconds")
         last_logerr = time.time()
 
 
