@@ -1,4 +1,5 @@
 #! /usr/bin/env python
+from cmath import log
 import rospy
 from geometry_msgs.msg import PoseStamped
 from pymavlink import mavutil
@@ -6,6 +7,17 @@ import time
 import tf2_ros
 import tf2_geometry_msgs
 from datetime import datetime
+
+rospy.init_node("mocap_node")
+interval = float(rospy.get_param("~interval"))
+device = rospy.get_param("~device")
+master = mavutil.mavlink_connection(device)
+
+buffer = tf2_ros.Buffer()
+listener = tf2_ros.TransformListener(buffer)
+last_sent = 0.0
+last_received = 0.0
+last_logerr = 0.0
 
 
 def ping(timeout=2):
@@ -71,22 +83,22 @@ def check_mavlink_connection(_):
 
 
 def check_mocap_reception(_):
+    global last_logerr
     since_last_pose = time.time() - last_received
     if since_last_pose > 5 * interval and time.time() - last_logerr > 30:
         rospy.logerr(f"No pose received in the last {since_last_pose} seconds")
         last_logerr = time.time()
 
 
-rospy.init_node("mocap_node")
-interval = float(rospy.get_param("~interval"))
-device = rospy.get_param("~device")
-master = mavutil.mavlink_connection(device)
+if not ping():
+    rospy.logerr(f"Failed to connect to {device}")
+    while not ping():
+        pass
+    rospy.logwarn(f"Connection established to {device}")
+    set_home_and_origin()
+else:
+    rospy.loginfo(f"Connection established to {device}")
 
-buffer = tf2_ros.Buffer()
-listener = tf2_ros.TransformListener(buffer)
-last_sent = 0.0
-last_received = 0.0
-last_logerr = 0.0
 
 set_home_and_origin()
 
