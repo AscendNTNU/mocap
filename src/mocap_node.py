@@ -25,15 +25,15 @@ def callback(msg: PoseStamped):
     global last_received, last_sent, receiving
 
     if last_received is None:
-        rospy.logwarn(
+        rospy.loginfo(
             "First pose received"
-        )  # should be loginfo but is not printed to terminal. TODO
+        )
     last_received = time.time()
 
     if not receiving:
-        rospy.logwarn(
+        rospy.loginfo(
             "Pose reception resumed"
-        )  # should be loginfo but is not printed to terminal. TODO
+        )
         receiving = True
 
     if time.time() - last_sent < INTERVAL:
