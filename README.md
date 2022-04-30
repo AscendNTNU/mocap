@@ -47,3 +47,8 @@ roslaunch mocap_node mocap.launch
 ```
 Now you should be able to arm and take off. 
 
+# Other considerations
+The [```ATT_POS_MOCAP``` message](https://mavlink.io/en/messages/common.html#ATT_POS_MOCAP) contains a ```time_usec``` field which needs to be filled. This field is filled with local time on the computer running ```mocap_node```. To compensate for [Qualisys processing delay](https://www.qualisys.com/news/real-time-latency-tests-of-a-qualisys-system-in-the-sensory-motor-systems-lab-at-eth-zurich-switzerland/) of 6-7 ms and the transmission delay from the computer running Qualisys to the computer running ```mocap_node```, [```VISO_DELAY_MS```](https://ardupilot.org/copter/docs/parameters.html#viso-delay-ms-visual-odometry-sensor-delay) is set to 10 ms. Here we assumed that the flight controller is synced with the ```mocap_node``` computer. It is believed that this is done thorugh Mavproxy.
+
+There is no need to set origin and home explicitly. But if you have to, check the scripts folder.
+
