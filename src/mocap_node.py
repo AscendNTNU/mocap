@@ -14,10 +14,7 @@ master = mavutil.mavlink_connection(device)
 buffer = tf2_ros.Buffer()
 listener = tf2_ros.TransformListener(buffer)
 
-master.mav.set_gps_global_origin_send(master.target_system, 599168569, 107284696, 0)
-master.mav.set_home_position_send(
-    master.target_system, 0, 0, 0, 0, 0, 0, [0, 0, 0, 0], 0, 0, 0
-)
+master.wait_heartbeat()
 
 receiving = True
 last_received = None
@@ -28,11 +25,15 @@ def callback(msg: PoseStamped):
     global last_received, last_sent, receiving
 
     if last_received is None:
-        rospy.logwarn("First pose received") # should be loginfo but is not printed to terminal. TODO
+        rospy.logwarn(
+            "First pose received"
+        )  # should be loginfo but is not printed to terminal. TODO
     last_received = time.time()
 
     if not receiving:
-        rospy.logwarn("Pose reception resumed") # should be loginfo but is not printed to terminal. TODO
+        rospy.logwarn(
+            "Pose reception resumed"
+        )  # should be loginfo but is not printed to terminal. TODO
         receiving = True
 
     if time.time() - last_sent < INTERVAL:
@@ -57,7 +58,7 @@ def callback(msg: PoseStamped):
     p = msg.pose.position
     x, y, z = p.x, p.y, p.z
 
-    master.mav.att_pos_mocap_send(0, q, x, y, z)
+    master.mav.att_pos_mocap_send(int(time.time_ns() / 1000), q, x, y, z)
     last_sent = time.time()
 
 
@@ -66,7 +67,7 @@ def reception_check(_):
     if last_received is None:
         return
 
-    if time.time() - last_received > 2 * INTERVAL and receiving:
+    if time.time() - last_received > 4 * INTERVAL and receiving:
         receiving = False
         rospy.logerr("Pose reception stopped")
         rospy.logwarn("Setting flight mode to land")
