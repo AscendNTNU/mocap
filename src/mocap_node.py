@@ -5,7 +5,6 @@ from pymavlink import mavutil
 import time
 import tf2_ros
 import tf2_geometry_msgs
-from datetime import datetime
 
 rospy.init_node("mocap_node")
 INTERVAL = 0.1
