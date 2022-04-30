@@ -29,6 +29,6 @@ def set_pos(x, y, z):
 
 i = 0
 while True:
-    time.sleep(0.1)
-    set_pos(10 * math.sin(i), 0.0, -(10.5 + 10 * math.cos(i)))
+    time.sleep(1)
+    set_pos(10 * math.sin(i), 1.5, -(10.5 + 10 * math.cos(i)))
     i += 0.01
