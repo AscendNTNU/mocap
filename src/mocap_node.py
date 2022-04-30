@@ -7,12 +7,17 @@ import time
 import tf2_ros
 import tf2_geometry_msgs
 
-rospy.init_node("mocap_node")
+rospy.init_node("mocap_node", log_level=rospy.INFO)
 INTERVAL = 0.1
 device = rospy.get_param("~device")
 master = mavutil.mavlink_connection(device)
 buffer = tf2_ros.Buffer()
 listener = tf2_ros.TransformListener(buffer)
+
+master.mav.set_gps_global_origin_send(master.target_system, 599168569, 107284696, 0)
+master.mav.set_home_position_send(
+    master.target_system, 0, 0, 0, 0, 0, 0, [0, 0, 0, 0], 0, 0, 0
+)
 
 receiving = True
 last_received = None
@@ -20,14 +25,14 @@ last_sent = 0.0
 
 
 def callback(msg: PoseStamped):
-    global last_received, last_sent
+    global last_received, last_sent, receiving
 
     if last_received is None:
-        rospy.loginfo("First pose received")
+        rospy.logwarn("First pose received") # should be loginfo but is not printed to terminal. TODO
     last_received = time.time()
 
     if not receiving:
-        rospy.loginfo("Pose reception resumed")
+        rospy.logwarn("Pose reception resumed") # should be loginfo but is not printed to terminal. TODO
         receiving = True
 
     if time.time() - last_sent < INTERVAL:
@@ -58,19 +63,20 @@ def callback(msg: PoseStamped):
 
 def reception_check(_):
     global receiving
-    if time.time() - last_received > 2 * INTERVAL:
+    if last_received is None:
+        return
+
+    if time.time() - last_received > 2 * INTERVAL and receiving:
         receiving = False
-        rospy.logerror("Pose reception stopped")
+        rospy.logerr("Pose reception stopped")
         rospy.logwarn("Setting flight mode to land")
-        master.mav.set_mav_cmd_do_set_mode(
+        master.mav.set_mode_send(
             master.target_system,
-            0,
-            176,
-            0,
-            1,
+            mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
+            9,
         )
 
 
 rospy.Subscriber(rospy.get_param("~topic"), PoseStamped, callback)
-rospy.Timer(rospy.Duration(1), reception_check)
+rospy.Timer(rospy.Duration(INTERVAL), reception_check)
 rospy.spin()
