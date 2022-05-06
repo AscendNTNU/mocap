@@ -5,7 +5,9 @@ import sympy, math, time
 
 
 master = mavutil.mavlink_connection("udp:127.0.0.1:14553")
+print("Waiting for heartbeat")
 master.wait_heartbeat()
+print("Heartbeat received")
 
 t = sympy.symbols("t")
 T = 10
@@ -32,19 +34,21 @@ while True:
     t = time.time()
     x, y, z = s.evalf(subs={"t": t}).col(0)
     vx, vy, vz = v.evalf(subs={"t": t}).col(0)
+    time.sleep(0.08)
+    print(x, y, z, vx, vy, vz)
 
     master.mav.set_position_target_local_ned_send(
         0,
         master.target_system,
         0,
         1,
-        0b111111000000,
+        0b000111000000,
         x,
         y,
-        z,
+        -z,
         vx,
         vy,
-        vz,
+        -vz,
         0.0,
         0.0,
         0.0,
