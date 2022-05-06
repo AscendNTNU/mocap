@@ -2,7 +2,6 @@
 
 from pymavlink import mavutil
 import sympy, math, time
-import matplotlib.pyplot as plt
 
 
 master = mavutil.mavlink_connection("udp:127.0.0.1:14553")
@@ -38,8 +37,8 @@ while True:
         0,
         master.target_system,
         0,
-        1,  # msg.CORDINATE_FRAME,
-        4088,  # MUST FIX
+        1,
+        0b111111000000,
         x,
         y,
         z,
