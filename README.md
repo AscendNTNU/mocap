@@ -31,7 +31,7 @@ roslaunch mocap_qualisys qualisys.launch
 ### On the Ubuntu computer 
 Launch mavrpoxy where you installed it
 ```
-./mavproxy --master=/dev/ttyUSB0 --out=udp:127.0.0.1:14550 --out=udp:127.0.0.1:14551 --out=udp:127.0.0.1:14552
+mavproxy --master=/dev/ttyUSB0 --out=udp:127.0.0.1:14550 --out=udp:127.0.0.1:14551 --out=udp:127.0.0.1:14552
 ```
 mocap_node uses ```udp:127.0.0.1:14551``` as default. That means ```udp:127.0.0.1:14550``` is free for for example QGroundControl, and ```udp:127.0.0.1:14552``` is free for other stuff.
 
