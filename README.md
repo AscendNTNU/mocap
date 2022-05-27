@@ -10,7 +10,8 @@ ROS (1) node for relaying mocap data from ROS to the drone over MAVlink.
 ## How to use the system 
 ### Qualisys (Windows 10) 
 - Login with PIN 0052
-- Start the Qualisys software, define a body and start recording.  
+- Start the Qualisys software and choose the QualisysAscend project.
+- Define a body and start recording.  
 - Open a terminal and start by sourcing the local workspace setup.
 ```
 devel\setup.bat
