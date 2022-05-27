@@ -8,6 +8,9 @@ ROS (1) node for relaying mocap data from ROS to the drone over MAVlink.
 - For mocap to work you need to upload these parameters: https://github.com/AscendNTNU/Drone-parameters/blob/main/mocap.params
 
 ## How to use the system 
+### On the Ubuntu computer
+Start a roscore 
+
 ### Qualisys (Windows 10) 
 - Login with PIN 0052
 - Start the Qualisys software and choose the QualisysAscend project.
