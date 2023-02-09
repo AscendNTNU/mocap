@@ -42,15 +42,15 @@ roslaunch mocap_qualisys qualisys.launch
 ### On the Ubuntu computer 
 At this point the drone should be powered on and the telemetry radio should be connected to the Ubuntu pc
 
-Launch mavrpoxy where you installed it (probably from home) (make sure QGroundControl is not running when launching mavproxy)
+Launch mavrpoxy where you installed it (probably in home) (make sure QGroundControl is not running when launching mavproxy)
 ```
 mavproxy --master=/dev/ttyUSB0 --out=udp:127.0.0.1:14550 --out=udp:127.0.0.1:14551 --out=udp:127.0.0.1:14552
 ```
-If this doesn't work try changing ```ttyUSB0``` with ```ttyUSB1```
+If this doesn't work you can try changing ```ttyUSB0``` to ```ttyUSB1```
 
 mocap_node uses ```udp:127.0.0.1:14551``` as default. That means ```udp:127.0.0.1:14550``` is free for for example QGroundControl, and ```udp:127.0.0.1:14552``` is free for other stuff.
 
-Go in to your ROS workspace and launch mocap_node. Remember to source both ros and ```ws/devel/setup.bash``` first.
+Go in to your ROS workspace (```ws```) and launch mocap_node. Remember to source both ros and ```devel/setup.bash``` first.
 ```
 roslaunch mocap_node mocap.launch drone:=nostromo
 ```
