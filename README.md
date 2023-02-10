@@ -20,7 +20,7 @@ roscore
 - Login with PIN 0052
 - Start the Qualisys software and choose the QualisysAscend project.
 - Start recording (click red dot) and click "cancel" to open the 3D display.
-- Define a body by selecting the dots on the drone, right click one of them, and create a new body. Give the drone a suiting name.
+- If the drone is not already defined in Qualisys do it by selecting the dots on the drone, right click one of them and create a new body. When doing this the drone should point in the direction of the x-axis. Give the drone a suiting name.
 - Open a terminal by clicking on the terminal icon in the taskbar.
 - Source the local workspace setup with the following command
 ```
@@ -30,7 +30,7 @@ Set the ROS_MASTER_URI to the ip of the Ubuntu pc (probably 192.168.0.115) and p
 ```
 setx ROS_MASTER_URI "http://192.168.0.115:11311"
 ```
-Set the ROS_IP to the ip of the windows pc (probably 192.168.0.100)
+Set the ROS_IP to the ip of the Windows pc (probably 192.168.0.100)
 ```
 setx ROS_IP "192.168.0.100"
 ```
@@ -42,7 +42,7 @@ roslaunch mocap_qualisys qualisys.launch
 ### On the Ubuntu computer 
 At this point the drone should be powered on and the telemetry radio should be connected to the Ubuntu pc
 
-Launch mavrpoxy where you installed it (probably in home) (make sure QGroundControl is not running when launching mavproxy)
+Launch mavproxy where you installed it (probably in home) (make sure QGroundControl is not running when launching mavproxy)
 ```
 mavproxy --master=/dev/ttyUSB0 --out=udp:127.0.0.1:14550 --out=udp:127.0.0.1:14551 --out=udp:127.0.0.1:14552
 ```
